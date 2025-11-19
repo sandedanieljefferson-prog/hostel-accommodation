@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HOSTEL HUB.COM</title>
+<style>
+:root {
+  --must-blue: #00247d;
+  --must-yellow: #ffd700;
+  --must-white: #ffffff;
+  --text-dark: #001744;
+  --must-green: #052e05;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: var(--must-white);
+  color: var(--text-dark);
+}
+
+/* ===== TOP BAR ===== */
+.top-bar {
+  background: var(--must-blue);
+  color: var(--must-white);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 6px 50px;
+  font-size: 0.9rem;
+}
+.top-links a {
+  color: var(--must-white);
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.top-links a:hover { text-decoration: underline; }
+
+/* ===== HEADER ===== */
+header {
+  background: var(white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 50px;
+  border-bottom: 4px solid var(--must-yellow);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.logo-circle {
+  width: 160px; /* Increased logo size */
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--must-white);
+  
+}
+.logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.logo-text h1 {
+  margin: 0;
+  font-size: 3.6rem;
+  color: var(--must-blue);
+}
+.logo-text p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--must-yellow);
+  font-weight: 600;
+}
+
+/* ===== NAVIGATION ===== */
+nav {
+  background: var(--must-blue);
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+nav li { position: relative; }
+nav a {
+  color: var(--must-white);
+  display: block;
+  padding: 14px 22px;
+  text-decoration: none;
+  font-weight: 600;
+}
+nav a:hover {
+  background: var(--must-yellow);
+  color: var(--must-blue);
+}
+
+/* Dropdown */
+nav ul ul {
+  position: absolute;
+  background: var(--must-blue);
+  top: 100%;
+  left: 0;
+  display: none;
+  min-width: 200px;
+}
+nav ul li:hover > ul { display: block; }
+nav ul ul a {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background: linear-gradient(rgba(0,36,125,0.8), rgba(0,36,125,0.8)), url('https://picsum.photos/1200/400?random=2') center/cover no-repeat;
+  color: var(--must-white);
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light Green Animated Line */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 70px;
+  left: -100%;
+  width: 80%;
+  height: 50px;
+  background: var(--must-green);
+  border-radius: 5px;
+  box-shadow: 0 0 15px var(--must-green);
+  animation: slideLine 3s ease-out forwards, glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes slideLine {
+  from { left: -100%; }
+  to { left: 10%; }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px var(--must-green); }
+  to { box-shadow: 0 0 25px var(--must-green); }
+}
+
+.hero h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+.hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== SLIDER ===== */
+.slider {
+  position: relative;
+  max-width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.slide.active { opacity: 1; }
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slider .caption {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,36,125,0.8);
+  color: var(--must-white);
+  padding: 12px 25px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.3);
+  color: var(--must-white);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  border-radius: 50%;
+}
+.slider-btn:hover { background: rgba(0,0,0,0.5); }
+.prev { left: 20px; }
+.next { right: 20px; }
+
+/* ===== ANNOUNCEMENTS ===== */
+.announcements {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px;
+  flex-wrap: wrap;
+}
+.announcements .box {
+  background: #f8f8f8;
+  border-left: 6px solid var(--must-yellow);
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+.announcements h3 {
+  color: var(--must-blue);
+  font-size: 1.2rem;
+}
+.announcements p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.announcements small {
+  color: #777;
+}
+
+/* ===== QUICK LINKS ===== */
+.quick-links {
+  background: var(--must-blue);
+  color: var(--must-white);
+  padding: 40px 20px;
+  text-align: center;
+}
+.quick-links h2 {
+  color: var(--must-yellow);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+.quick-links a {
+  display: inline-block;
+  color: var(--must-white);
+  background: rgba(255,255,255,0.1);
+  padding: 12px 18px;
+  margin: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.quick-links a:hover {
+  background: var(--must-yellow);
+  color: var(--must-blue);
+}
+
+/* ===== EVENTS ===== */
+.events {
+  padding: 50px 20px;
+  text-align: center;
+}
+.events h2 {
+  color: var(--must-blue);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+.event-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.event {
+  width: 260px;
+  border: 1px solid #ddd;
+  border-top: 6px solid var(--must-yellow);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: left;
+}
+.event h3 {
+  color: var(--must-blue);
+  font-size: 1.1rem;
+}
+.event p {
+  font-size: 0.9rem;
+  color: #333;
+}
+.event small {
+  color: #666;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--must-blue);
+  color: var(--must-white);
+  text-align: center;
+  padding: 25px;
+  margin-top: 60px;
+  font-weight: 500;
+}
+footer a {
+  color: var(--must-yellow);
+  text-decoration: none;
+}
+footer a:hover { text-decoration: underline;
+ }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #0056b3; /* Blue inside color */
+  border: 2px solid #FFD700; /* Yellow border */
+  border-radius: 30px; /* Rounded edges */
+  padding: 6px 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  padding: 8px 10px;
+  width: 200px;
+}
+
+.search-bar input::placeholder {
+  color: #f0f0f0;
+}
+
+.search-bar button {
+  background: #ebedf0; /* Yellow button */
+  color: #0056b3;      /* Blue icon color */
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.search-bar button:hover {
+  background: #fff;
+  color: #0056b3;
+  box-shadow: 0 0 8px #FFD700;
+}
+
+.search-bar:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+h6{
+  color: #e9d206;
+  text-align: center;
+  font-weight: 800;
+  font-size: 25px;
+}
+
+
+</style>
+</head>
+
+
+
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+  <div class="top-links">
+    <a href="admin-login.html">Admin Login</a>
+     <a href="register.html">Register</a>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo">
+    <div class="logo-circle">
+      <img src="kihumurohallls.png" alt="University Logo">
+    </div>
+    <div class="logo-text">
+      <h1>HOSTEL HUB</h1>
+      <p>SAFE AND DIRECT</p>
+    </div>
+  </div>
+   <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search hostels or areas...">
+    <button id="searchBtn">🔍</button>
+  </div>
+</header>
+
+ 
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+
+  function performSearch() {
+    const query = searchInput.value.trim();
+    if (query) {
+      window.location.href = `hostels.html?search=${encodeURIComponent(query)}`;
+    }
+  }
+
+  searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') performSearch();
+  });
+</script>
+
+
+</header>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <ul>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="bookings.html">Bookings</a></li>
+    <li><a href="profile.html">My Profile</a></li>
+    <li><a href="help.html">Help</a></li>
+    <li><a href="hostels.html">Hostels</a></li>
+    <li><a href="login.html">Login</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <h2>Welcome to Hostel Hub</h2>
+  <p>Empowering Online Bookings, Payments Around Mbarara Society.</p>
+</section>
+
+<!-- ===== SLIDER ===== -->
+<div class="slider">
+  <div class="slide active">
+    <img src="kihumurohallls.png" alt="Campus view">
+    <div class="caption">BOOKINGS BEGIN HERE </div>
+  </div>
+<!--
+  <div class="slide">
+    <img src="images (1).jpeg.jpg" alt="Students at work">
+    <div class="caption">OPEN COMMUNICATION</div>
+  </div>
+  <div class="slide">
+    <img src="images.jpeg.jpg" alt="Research center">
+    <div class="caption">ON LINE BASED SERVICES</div>
+  </div> 
+-->
+  <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
+  <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+</div>
+
+<!-- ===== ANNOUNCEMENTS ===== -->
+<section class="announcements">
+  <div class="box">
+    <h3>Admin login</h3>
+    <small>only for admins</small>
+    <p>to create accounts <br> post rooms and receive payments<br> re </p>
+  </div>
+  <div class="box">
+    <h3>students and all customers </h3>
+    <small>create accounts</small>
+    <p>Register<br> book <br> make complaints <br> make payments </p>
+  </div>
+  <div class="box">
+    <h3>with iniversity Affairs</h3>
+    <small>the university support</small>
+    <p>MUST approves hostels for students<br> safety and security </p>
+  </div>
+</section>
+
+<!-- ===== QUICK LINKS ===== -->
+<section class="quick-links">
+  <h2>Quick User Access</h2>
+  <a href="register.html">Register</a>
+  <a href="admin-login.html">Admin Login</a>
+  <li><a href="login.html">Login</a></li>
+   <li><a href="profile.html">My Profile</a></li>
+    <li><a href="help.html">Help</a></li>
+
+
+
+</section>
+
+<!-- ===== EVENTS ===== -->
+<section class="events">
+  <h2>Upcoming Hostel Offers</h2>
+  <div class="event-cards">
+    <div class="event">
+      <h3>Need of a Roommet</h3>
+      <small>updates will be made indicating one that needs a Roommet</small>
+    </div>
+    <div class="event">
+      <h3>New Uploaded Hostels</h3>
+      <small> Tap bellow to view</small>
+      <li><a href="hostels.html">Hostels</a></li>
+    </div>
+    <div class="event">
+      <h3>Hostels available for days</h3>
+      <small>the offer depends on how long the hostel willl be available like for a week</small>
+      <p>All Uploads and information will made here in this tab </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  © HostelHub | <a href="about.html">About Us</a> | <a href="contact.html">Contact Us</a></footer>
+  <h6>THANK YOU FOR VISTING US </h6>
+</footer>
+
+
+<!--
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .image-section {
+      width: 100%;
+      overflow: hidden;
+      background: #fff;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .scroll-row {
+      display: flex;
+      gap: 30px;
+      animation: scrollLeft 20s linear infinite;
+    }
+
+    .scroll-row.reverse {
+      animation: scrollRight 25s linear infinite;
+      margin-top: 30px;
+    }
+
+    .scroll-row img {
+      width: 220px;
+      height: 150px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    @keyframes scrollLeft {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    @keyframes scrollRight {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body>
+
+<section class="image-section">
+   Row 1: moves left 
+  <div class="scroll-row">
+    <img src="hostel1.jpg" alt="Hostel 1">
+    <img src="hostel2.jpg" alt="Hostel 2">
+    <img src="hostel3.jpg" alt="Hostel 3">
+    <img src="hostel4.jpg" alt="Hostel 4">
+    <img src="hostel5.jpg" alt="Hostel 5">
+  </div>
+
+  Row 2: moves right
+  <div class="scroll-row reverse">
+    <img src="hostel6.jpg" alt="Hostel 6">
+    <img src="hostel7.jpg" alt="Hostel 7">
+    <img src="hostel8.jpg" alt="Hostel 8">
+    <img src="hostel9.jpg" alt="Hostel 9">
+    <img src="hostel10.jpg" alt="Hostel 10">
+  </div>
+</section>
+-->
+
+
+
+<script>
+let slides = document.querySelectorAll('.slide');
+let current = 0;
+function showSlide(index) {
+  slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+}
+function nextSlide() {
+  current = (current + 1) % slides.length;
+  showSlide(current);
+}
+function prevSlide() {
+  current = (current - 1 + slides.length) % slides.length;
+  showSlide(current);
+}
+setInterval(nextSlide, 5000);
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Profile - Hostelhub</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #1421db; color: #222; }
+.container { max-width: 700px; margin: 40px auto 100px auto; background: #7ea6d4; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); padding: 40px 30px; }
+.header-row { display: flex; align-items: center; justify-content: space-between; position: relative; }
+.header-side { width: 80px; display: flex; align-items: center; justify-content: flex-start; }
+.header-center { flex: 1; display: flex; justify-content: center; align-items: center; position: absolute; left: 0; right: 0; pointer-events: none; }
+.header-center h1 { color: red; font-size: 2.5rem; margin: 0; pointer-events: auto; }
+#dashboardIcon { cursor: pointer; margin-left: 0; }
+#dashboardIcon img { width: 40px; height: 40px; border-radius: 50%; vertical-align: middle; }
+#dashboardMenu { display: none; position: absolute; right: 40px; top: 90px; background: #fff; color: #222; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); padding: 18px 24px; z-index: 2000; }
+#dashboardMenu ul { list-style: none; padding: 0; margin: 0; }
+#dashboardMenu li { margin-bottom: 10px; }
+#dashboardMenu li:last-child { margin-bottom: 0; }
+.profile-section { margin-bottom: 36px; }
+.profile-title { color: #452B1F; font-size: 1.3rem; margin-bottom: 10px; }
+.profile-info { font-size: 1.1rem; margin-bottom: 10px; display:flex; align-items:center; }
+.profile-info span { margin-left: 10px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+th { background: #452B1F; color: #fff; }
+tr:nth-child(even) { background: #f2f2f2; }
+.logout-btn { background: #ff4d4d; color: #fff; border: none; border-radius: 20px; padding: 10px 28px; font-size: 1rem; cursor: pointer; transition: background 0.2s; margin-top: 18px; }
+.logout-btn:hover { background: #452B1F; }
+.notification { position: fixed; top: 20px; right: 30px; background: #452B1F; color: #fff; padding: 14px 28px; border-radius: 10px; font-size: 1.1rem; z-index: 3000; display: none; }
+.avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; display: inline-block; background: linear-gradient(135deg,#ffb84d,#452B1F); color: #fff; font-weight: bold; font-size: 2rem; text-align: center; line-height: 48px; }
+.back-to-top { position: fixed; bottom: 80px; right: 30px; background: #452B1F; color: #fff; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 2rem; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.15); display: none; z-index: 3000; transition: background 0.2s; }
+.back-to-top:hover { background: #ff4d4d; }
+.spinner { display: none; margin: 30px auto; border: 6px solid #eee; border-top: 6px solid #452B1F; border-radius: 50%; width: 48px; height: 48px; animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.btn-slip { background:#452B1F;color:#fff;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:0.9rem; }
+.btn-slip:hover { background:#ff4d4d; }
+/* Rating star button visuals */
+.star-btn { transition: transform 120ms ease, color 120ms ease; }
+.star-btn:hover { transform: scale(1.1); color: #000; }
+/* QR Modal */
+#qrModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:4000; }
+#qrContent { background:#fff; border-radius:12px; padding:20px; max-width:400px; width:90%; text-align:center; position:relative; }
+#modalClose { position:absolute; top:10px; right:10px; cursor:pointer; font-size:20px; background:none; border:none; }
+#printAllModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:flex-start; padding-top:30px; z-index:4000; overflow-y:auto; }
+#printAllContent { background:#fff; border-radius:12px; padding:20px; max-width:700px; width:95%; text-align:center; position:relative; }
+#printAllClose { position:absolute; top:10px; right:10px; cursor:pointer; font-size:20px; background:none; border:none; }
+.print-hostel-img { width:80%; max-width:300px; border-radius:12px; margin-bottom:15px; }
+.delete-btn { background:#ff4d4d;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.9rem;margin-left:8px; }
+.delete-btn:hover { background:#452B1F; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-row">
+        <div class="header-side"><span id="dashboardIcon"><img src="dashboard.png" alt="board"></span></div>
+        <div class="header-center"><h1>HOSTELHUB</h1></div>
+        <div class="header-side" style="justify-content: flex-end;"></div>
+    </div>
+
+    <div id="dashboardMenu">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="hostels.html">Available Hostels</a></li>
+            <li><a href="bookings.html">Bookings</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><button id="userLogoutBtn">Logout</button></li>
+        </ul>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-title">User Profile</div>
+        <div class="profile-info">
+            <span class="avatar" id="profileAvatar"></span>
+            <span id="profileUsername"></span>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-title">Your Payments</div>
+        <div id="profilePayments"></div>
+    <button class="btn-slip" id="viewAllSlipsBtn">View/Print All Slips</button>
+    </div>
+    
+    <div class="profile-section" id="complaintSection">
+        <div class="profile-title">Complaints / Conversations with Admin</div>
+        <div id="conversationContainer">
+            <div style="margin-bottom:8px;">Start a conversation with the admin. Messages persist until cleared by you or an admin.</div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+                <input id="complaintInput" placeholder="Write your message to admin..." style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;">
+                <button id="sendComplaintBtn" class="btn-slip">Send</button>
+            </div>
+            <div id="threadView" style="max-height:260px;overflow:auto;border:1px solid #eee;padding:10px;border-radius:8px;background:#fffbe6;"></div>
+            <div style="margin-top:8px;"><button id="clearConversationBtn" class="delete-btn">Clear Conversation</button></div>
+            <div style="margin-top:12px;">
+                <div style="margin-bottom:6px;font-weight:600;">Rate your experience</div>
+                <div id="ratingStars" style="display:flex;gap:6px;align-items:center;">
+                    <button class="star-btn" data-star="1" style="background:none;border:none;font-size:26px;cursor:pointer;">☆</button>
+                    <button class="star-btn" data-star="2" style="background:none;border:none;font-size:26px;cursor:pointer;">☆</button>
+                    <button class="star-btn" data-star="3" style="background:none;border:none;font-size:26px;cursor:pointer;">☆</button>
+                    <button class="star-btn" data-star="4" style="background:none;border:none;font-size:26px;cursor:pointer;">☆</button>
+                    <button class="star-btn" data-star="5" style="background:none;border:none;font-size:26px;cursor:pointer;">☆</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="back-to-top" id="backToTopBtn" title="Back to Top">↑</button>
+<div class="spinner" id="profileSpinner"></div>
+<div class="notification" id="profileNotification"></div>
+
+<!-- Single QR Modal -->
+<div id="qrModal">
+    <div id="qrContent">
+        <button id="modalClose">✖</button>
+        <div id="modalDetails"></div>
+        <img id="modalHostelImage" class="print-hostel-img" src="" alt="Hostel Image">
+        <div id="modalQRCode" style="margin-top:15px;"></div>
+        <button onclick="window.print()" style="margin-top:10px;padding:8px 16px;">Print Slip</button>
+    </div>
+</div>
+
+<!-- Print All Modal -->
+<div id="printAllModal">
+    <div id="printAllContent">
+        <button id="printAllClose">✖</button>
+        <div id="allSlipsContainer"></div>
+        <button onclick="window.print()" style="margin-top:10px;padding:8px 16px;">Print All Slips</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+// Load user
+const username = localStorage.getItem('loggedInUser');
+if(!username) window.location.href='login.html';
+const avatarElement = document.getElementById('profileAvatar');
+const savedAvatar = localStorage.getItem('userAvatar');
+if(savedAvatar){
+    avatarElement.style.background = `url(${savedAvatar}) center/cover no-repeat`;
+    avatarElement.textContent = '';
+}else{
+    avatarElement.textContent = username[0].toUpperCase();
+}
+
+// Profile username
+document.getElementById('profileUsername').textContent = 'Username: ' + username;
+
+// Scroll button
+window.onscroll = ()=>{ document.getElementById('backToTopBtn').style.display = window.scrollY>200?'block':'none'; }
+document.getElementById('backToTopBtn').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+// Spinner helpers
+function showSpinner(){document.getElementById('profileSpinner').style.display='block';}
+function hideSpinner(){document.getElementById('profileSpinner').style.display='none';}
+
+// Load payments (original behavior: one row per payment, View Slip per payment)
+function loadPayments(){
+    showSpinner();
+    setTimeout(()=>{
+        let payments = JSON.parse(localStorage.getItem('payments')||'[]');
+        payments = payments.filter(p=>p.user===username);
+        let html = payments.length===0 ? '<div style="color:#888;">No payments yet.</div>' :
+            `<table><tr><th>Hostel</th><th>Paid</th><th>Price</th><th>Balance</th><th>Network</th><th>Number</th><th>Slip</th><th>Action</th></tr>`+
+            payments.map((p,i)=>{
+                // compute total paid for this hostel by the user (sum of amounts for same hostel)
+                const hostelKey = (p.hostel || p.hostelName) || '';
+                const totalPaid = payments.filter(pp => ((pp.hostel||pp.hostelName)||'') === hostelKey)
+                    .reduce((s,pp)=> s + (parseInt(pp.amount,10) || 0), 0);
+                const priceVal = parseInt(p.price,10) || 0;
+                const balanceVal = Math.max(0, priceVal - totalPaid);
+                return `<tr>
+                    <td>${hostelKey}</td>
+                    <td>${totalPaid}</td>
+                    <td>${priceVal}</td>
+                    <td>${balanceVal}</td>
+                    <td>${p.network}</td>
+                    <td>${p.number}</td>
+                    <td><button class="btn-slip" onclick="showSlip(${i})">View Slip</button></td>
+                    <td><button class="delete-btn" onclick="deletePayment(${i})">Delete</button></td>
+                </tr>`;
+            }).join('')+`</table>`;
+        document.getElementById('profilePayments').innerHTML=html;
+        hideSpinner();
+    },200);
+}
+
+// Show single slip modal (original behavior)
+function showSlip(index){
+    let payments = JSON.parse(localStorage.getItem('payments')||'[]').filter(p=>p.user===username);
+    const p = payments[index];
+    if(!p) return;
+    document.getElementById('modalHostelImage').src = p.img || '';
+    document.getElementById('modalHostelImage').alt = p.hostel || p.hostelName;
+    // compute true total paid for this hostel by the user
+    const hostelKey = (p.hostel || p.hostelName) || '';
+    const userPayments = JSON.parse(localStorage.getItem('payments')||'[]').filter(pp=>pp.user===username);
+    const totalPaid = userPayments.filter(pp => ((pp.hostel||pp.hostelName)||'') === hostelKey)
+        .reduce((s,pp)=> s + (parseInt(pp.amount,10) || 0), 0);
+    const priceVal = parseInt(p.price,10) || 0;
+    const balanceVal = Math.max(0, priceVal - totalPaid);
+    document.getElementById('modalDetails').innerHTML = `<p><strong>User:</strong> ${username}</p>
+        <p><strong>Hostel:</strong> ${hostelKey}</p>
+        <p><strong>Paid (total):</strong> ${totalPaid}</p>
+        <p><strong>Price:</strong> ${priceVal}</p>
+        <p><strong>Balance:</strong> ${balanceVal}</p>
+        <p><strong>Network:</strong> ${p.network}</p>
+        <p><strong>Number:</strong> ${p.number}</p>
+        <p><em>Generated on ${new Date().toLocaleString()}</em></p>`;
+    const qrContainer = document.getElementById('modalQRCode');
+    qrContainer.innerHTML='';
+    new QRCode(qrContainer,{
+        text:`User:${username},Hostel:${p.hostel || p.hostelName},Amount:${p.amount},Network:${p.network},Number:${p.number}`,
+        width:150,height:150
+    });
+    document.getElementById('qrModal').style.display='flex';
+}
+document.getElementById('modalClose').onclick = ()=>{document.getElementById('qrModal').style.display='none';};
+
+// View/Print all slips (original behavior)
+document.getElementById('viewAllSlipsBtn').onclick = ()=>{
+    let payments = JSON.parse(localStorage.getItem('payments')||'[]').filter(p=>p.user===username);
+    if(payments.length===0){ alert('No payments yet.'); return; }
+    const container = document.getElementById('allSlipsContainer');
+    container.innerHTML='';
+    payments.forEach(p=>{
+        const div=document.createElement('div');
+        div.style.border='1px solid #ddd'; div.style.padding='10px'; div.style.marginBottom='15px';
+        const hostelKey = (p.hostel || p.hostelName) || '';
+        const totalPaid = payments.filter(pp => ((pp.hostel||pp.hostelName)||'') === hostelKey)
+            .reduce((s,pp)=> s + (parseInt(pp.amount,10) || 0), 0);
+        const priceVal = parseInt(p.price,10) || 0;
+        const balanceVal = Math.max(0, priceVal - totalPaid);
+        div.innerHTML=`<p><strong>User:</strong>${username}</p>
+                       <p><strong>Hostel:</strong>${hostelKey}</p>
+                       <img class="print-hostel-img" src="${p.img}" alt="${hostelKey}">
+                       <p><strong>Amount (total):</strong>${totalPaid}</p>
+                       <p><strong>Price:</strong>${priceVal}</p>
+                       <p><strong>Balance:</strong>${balanceVal}</p>
+                       <p><strong>Network:</strong>${p.network}</p>
+                       <p><strong>Number:</strong>${p.number}</p>
+                       <div class="qrcode" style="margin-top:10px;"></div>
+                       <p><em>Generated on ${new Date().toLocaleString()}</em></p>`;
+        container.appendChild(div);
+        new QRCode(div.querySelector('.qrcode'),{
+            text:`User:${username},Hostel:${hostelKey},Paid:${totalPaid},Price:${priceVal},Balance:${balanceVal},Network:${p.network},Number:${p.number}`,
+            width:120,height:120
+        });
+    });
+    document.getElementById('printAllModal').style.display='flex';
+};
+document.getElementById('printAllClose').onclick = ()=>{document.getElementById('printAllModal').style.display='none';};
+
+// Delete payment
+function deletePayment(index){
+    let payments = JSON.parse(localStorage.getItem('payments')||'[]');
+    let userPayments = payments.filter(p=>p.user===username);
+    const deleted = userPayments[index];
+    if(confirm(`Delete payment for ${deleted.hostel || deleted.hostelName}?`)){
+        // Remove from original array
+        const globalIndex = payments.findIndex(p=>p.user===username && (p.hostel||p.hostelName)===(deleted.hostel||deleted.hostelName) && p.number===deleted.number);
+        if(globalIndex>=0) payments.splice(globalIndex,1);
+        localStorage.setItem('payments', JSON.stringify(payments));
+        loadPayments();
+        notify('Payment deleted','error');
+    }
+}
+
+// Logout
+document.getElementById('userLogoutBtn').addEventListener('click',()=>{
+    localStorage.removeItem('loggedInUser');
+    window.location.href='login.html';
+});
+
+// Dashboard toggle
+document.getElementById('dashboardIcon').onclick = e=>{
+    e.stopPropagation();
+    const menu=document.getElementById('dashboardMenu');
+    menu.style.display=menu.style.display==='block'?'none':'block';
+};
+document.body.addEventListener('click',()=>{document.getElementById('dashboardMenu').style.display='none';});
+
+// Notification
+function notify(msg,type='success'){
+    const n=document.getElementById('profileNotification');
+    n.textContent=msg;
+    n.style.background = type==='error'?'#ff4d4d':'#452B1F';
+    n.style.display='block'; 
+    setTimeout(()=>{ n.style.display='none'; },2200);
+}
+
+// Init
+window.onload=loadPayments;
+
+// --- Conversations (profile <> admin) ---
+function getConversations() {
+    try { return JSON.parse(localStorage.getItem('conversations')||'[]'); } catch { return []; }
+}
+function saveConversations(arr) { localStorage.setItem('conversations', JSON.stringify(arr)); }
+function getThreadForUser(user) {
+    const conv = getConversations();
+    return conv.find(c => c.user === user) || { user: user, messages: [] };
+}
+function renderThread() {
+    const thread = getThreadForUser(username);
+    const container = document.getElementById('threadView');
+    if(!container) return;
+    if(!thread.messages || thread.messages.length===0) {
+        container.innerHTML = '<div style="color:#888;">No messages yet.</div>';
+        return;
+    }
+    container.innerHTML = thread.messages.map(m=>{
+        const cls = m.from==='admin' ? 'style="background:#fff;padding:8px;border-radius:8px;margin-bottom:8px;"' : 'style="background:#452B1F;color:#fff;padding:8px;border-radius:8px;margin-bottom:8px;"';
+        const who = m.from==='admin' ? 'Admin' : 'You';
+        return `<div ${cls}><div style="font-size:0.85rem;color:#666;margin-bottom:6px;"><strong>${who}</strong> • ${new Date(m.ts).toLocaleString()}</div><div>${escapeHtml(m.text)}</div></div>`;
+    }).join('');
+}
+function escapeHtml(s){ return (s+'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+document.getElementById('sendComplaintBtn').onclick = function(){
+    const txt = document.getElementById('complaintInput').value.trim();
+    if(!txt) return alert('Enter a message');
+    const conv = getConversations();
+    let thread = conv.find(c=>c.user===username);
+    if(!thread) { thread = { user: username, messages: [] }; conv.push(thread); }
+    thread.messages.push({ id: 'm'+Date.now(), from: username, to: 'admin', text: txt, ts: Date.now() });
+    // mark as unread for admin
+    thread.unread = true;
+    saveConversations(conv);
+    document.getElementById('complaintInput').value='';
+    renderThread();
+    notify('Message sent to admin');
+};
+document.getElementById('clearConversationBtn').onclick = function(){
+    if(!confirm('Clear this conversation? This will remove all messages for both you and admin.')) return;
+    // create a backup before clearing (timestamped key)
+    try{
+        const all = getConversations();
+        const backupKey = 'conversations_backup_' + Date.now();
+        localStorage.setItem(backupKey, JSON.stringify(all));
+    } catch(e){}
+    let conv = getConversations();
+    conv = conv.filter(c=>c.user!==username);
+    saveConversations(conv);
+    renderThread();
+    notify('Conversation cleared','error');
+};
+// Re-render on storage events (support multiple tabs)
+window.addEventListener('storage', function(e){ if(e.key==='conversations') renderThread(); });
+// show existing thread on load
+renderThread();
+
+// --- Rating stars logic ---
+function renderStars(){
+    const thread = getThreadForUser(username);
+    const rating = thread.rating || 0;
+    document.querySelectorAll('#ratingStars .star-btn').forEach(btn=>{
+        const s = parseInt(btn.getAttribute('data-star'),10);
+        btn.textContent = s <= rating ? '★' : '☆';
+        btn.style.color = s <= rating ? '#000' : '#666';
+    });
+}
+document.querySelectorAll('#ratingStars .star-btn').forEach(btn=>{
+    btn.addEventListener('click', function(){
+        const star = parseInt(this.getAttribute('data-star'),10);
+        const conv = getConversations();
+        let thread = conv.find(c=>c.user===username);
+        if(!thread){ thread = { user: username, messages: [] }; conv.push(thread); }
+        thread.rating = star;
+        // flag admin that there is a new rating to view
+        thread.unread = true;
+        saveConversations(conv);
+        renderStars();
+        notify('Rating saved');
+    });
+});
+// Re-render stars when conversations change
+window.addEventListener('storage', function(e){ if(e.key==='conversations') renderStars(); });
+renderStars();
+</script>
+</body>
+</html>

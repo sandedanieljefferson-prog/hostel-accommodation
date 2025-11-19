@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - HostelHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Roboto', sans-serif; background:#0e0e0e; color:#fff; overflow-x:hidden; }
+
+/* AQUARIUM BACKGROUND */
+#aquarium {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden;
+  background: linear-gradient(to top, #001f3f 0%, #004466 50%, #0077aa 100%);
+}
+.light-ray {
+  position:absolute; width:200%; height:200%; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 80%);
+  top:-50%; left:-50%; animation: moveLight 10s infinite linear;
+}
+@keyframes moveLight { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
+.fish {
+  position:absolute; width:40px; height:20px; background:orange; border-radius:50%; animation: swim linear infinite;
+}
+.fish::after { content:''; position:absolute; width:10px; height:10px; background:darkorange; border-radius:50%; right:-5px; top:5px; }
+@keyframes swim { 0% { transform:translateX(-50px) translateY(0) rotate(0deg);} 100% { transform:translateX(110vw) translateY(var(--y,0px)) rotate(360deg);} }
+
+/* CONTAINER */
+.container { max-width: 1100px; margin:140px auto 60px auto; background: rgba(0,0,0,0.6); border-radius: 20px; padding:40px; box-shadow:0 4px 24px rgba(0,0,0,0.6); }
+
+/* HEADER ROW */
+.header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+.header-side { display:flex; align-items:center; gap:10px; }
+.header-center { flex:1; text-align:center; font-family:'Poppins', sans-serif; font-size:2.2rem; color:#ffd633; }
+.header-icon-img { width:38px; height:38px; border-radius:50%; cursor:pointer; transition: transform 0.2s; }
+.header-icon-img:hover { transform:scale(1.08) rotate(-6deg); }
+
+/* DASHBOARD MENU */
+#dashboardMenu {
+  display:none; position:absolute; right:0; top:60px; background:#fff; color:#222;
+  border-radius:16px; padding:25px 30px; min-width:220px; box-shadow:0 6px 24px rgba(0,0,0,0.3); font-size:1.05rem; z-index:1000;
+}
+#dashboardMenu ul { list-style:none; display:flex; flex-direction:column; gap:12px; padding:0; margin:0; }
+#dashboardMenu a { text-decoration:none; color:#222; }
+#dashboardMenu a:hover { color:#ffb84d; }
+
+/* PAGE CONTENT */
+h1 { font-family:'Poppins', sans-serif; color:#ffd633; margin-bottom:20px; font-size:2rem; text-align:center; }
+p { font-size:1.05rem; line-height:1.7; color:#eee; margin-bottom:20px; }
+
+/* BLOG-CARD STYLE */
+.blog-card { background: rgba(255,255,255,0.05); border-radius:20px; padding:25px 30px; box-shadow:0 4px 18px rgba(255,255,255,0.1); transition: transform 0.3s, box-shadow 0.3s; margin-bottom:20px; }
+.blog-card:hover { transform:scale(1.02); box-shadow:0 8px 30px rgba(255,200,80,0.5); }
+
+/* FOOTER */
+footer { background: linear-gradient(45deg, #452B1F, #ff4d4d, #ffb84d, #452B1F); background-size:400% 400%; animation: gradientBG 15s ease infinite; color:#fff; text-align:center; padding:30px 0; font-size:1.2rem; font-family:'Poppins', sans-serif; font-weight:600; box-shadow:0 -4px 12px rgba(0,0,0,0.6); position: relative; }
+
+/* ANIMATIONS */
+@keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .header-center { font-size:1.6rem; }
+  .container { margin:120px 20px 60px 20px; padding:25px; }
+}
+
+nav ul {
+  list-style: none;          /* Removes bullets */
+  display: flex;             /* Align items horizontally */
+  justify-content: center;   /* Centers the links horizontally */
+  align-items: center;       /* Centers them vertically */
+  margin: 0;
+  padding: 0;
+  background-color: #00247d; /* Optional: background color for nav */
+}
+
+nav li {
+  margin: 0 15px; /* Spacing between each link */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  background: #ffd700;  /* Yellow hover effect */
+  color: #00247d;       /* Blue text on hover */
+  border-radius: 5px;
+}
+
+
+</style>
+</head>
+<body>
+
+  <title>About Us - HostelHub</title>
+  <!-- ===== NAVIGATION ===== -->
+<nav>
+  <ul>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="terms.html">Terms</a></li>
+    <li><a href="bookings.html">Bookings</a></li>
+    <li><a href="profile.html">My Profile</a></li>
+    <li><a href="help.html">Help</a></li>
+    <li><a href="hostels.html">Hostels</a></li>
+    <li><a href="login.html">Login</a></li>
+   <li><a href="admin-login.html">Admin Login</a></li>
+     <li><a href="register.html">Register</a></li>
+  </ul>
+</nav>
+<!-- i18n removed -->
+<div id="aquarium">
+  <div class="light-ray"></div>
+</div>
+
+<!-- HEADER -->
+<div class="container">
+  <div class="header-row">
+    <div class="header-side" style="position:relative;">
+     
+    </div>
+    <div class="header-center">HOSTELHUB</div>
+    <div class="header-side">
+      <a href="login.html"><img src="regester.jpeg" alt="Register/Login" class="header-icon-img"></a>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="blog-card">
+    <h1>About HostelHub</h1>
+    <p>HostelHub is dedicated to making it easy for university students to find and book hostels of their choice. Our platform provides a seamless experience, allowing students to search, compare, and book hostels based on their preferences, location, and budget. We aim to solve the challenge of hostel hunting by offering a comprehensive, user-friendly solution.</p>
+  </div>
+
+  <div class="blog-card">
+    <h2>Our Mission</h2>
+    <p>To provide students with reliable, up-to-date information and easy booking options, ensuring a safe and comfortable stay in their chosen hostel.</p>
+  </div>
+
+  <div class="blog-card">
+    <h2>Our Vision</h2>
+    <p>To become the go-to platform for hostel bookings across universities, combining convenience, trust, and an engaging user experience.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 HostelHub. Connecting students with comfort ✨
+</footer>
+
+<script>
+// Dashboard toggle
+const dashboardIcon=document.getElementById('dashboardIcon');
+const dashboardMenu=document.getElementById('dashboardMenu');
+dashboardIcon.addEventListener('click',e=>{
+  e.stopPropagation();
+  dashboardMenu.style.display=dashboardMenu.style.display==='block'?'none':'block';
+});
+document.body.addEventListener('click',()=>{dashboardMenu.style.display='none';});
+
+// Logout functionality
+document.getElementById('userLogoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = 'login.html';
+});
+
+// Aquarium fish
+const aquarium=document.getElementById('aquarium');
+for(let i=0;i<20;i++){
+  const f=document.createElement('div');
+  f.className='fish';
+  f.style.top=Math.random()*80+'vh';
+  f.style.width=20+Math.random()*40+'px';
+  f.style.height=10+Math.random()*20+'px';
+  f.style.animationDuration=(5+Math.random()*10)+'s';
+  f.style.setProperty('--y',Math.random()*50+'px');
+  aquarium.appendChild(f);
+}
+</script>
+
+</body>
+</html>

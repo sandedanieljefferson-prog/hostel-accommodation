@@ -1,0 +1,42 @@
+/* Cloud Blue theme file - defines light (cloud-blue) and dark (index-like) themes
+   Applied by adding either .theme-light or .theme-dark to the <html> element.
+*/
+
+/* LIGHT THEME (cloud-blue) */
+.theme-light body, .theme-light html {
+  /* Light orange site background requested by user */
+  background: #fff4e6 !important;
+  color: #122 !important;
+}
+.theme-light .container,
+.theme-light .hostel-card,
+.theme-light .blog-card,
+.theme-light .admin-card {
+  background: #ffffff !important;
+  color: #122 !important;
+  box-shadow: 0 6px 20px rgba(3,24,56,0.06) !important;
+}
+.theme-light .hostel-card .name,
+.theme-light .hostel-card .details,
+.theme-light .hostel-card .price { color:#122 !important; }
+.theme-light .navbar,
+.theme-light .header-row,
+.theme-light .header-middle { background: rgba(69,43,31,0.96) !important; color:#fff !important; }
+.theme-light .navbar a, .theme-light .nav-links a, .theme-light .header-top, .theme-light .header-center h1 { color:#fff !important; }
+.theme-light .footer, .theme-light footer { background: linear-gradient(45deg,#ffb84d,#ff7a2d) !important; color:#fff !important; }
+.theme-light a { color:#0b5bd7 !important; }
+.theme-light .hostel-card button, .theme-light button[type="submit"], .theme-light .book-btn, .theme-light .view-location-btn { background:#452B1F !important; color:#fff !important; }
+.theme-light input[type="text"], .theme-light input[type="password"], .theme-light input[type="number"], .theme-light select, .theme-light .search-input { background:#fff !important; color:#122 !important; border-color:rgba(69,43,31,0.9) !important; }
+
+/* DARK THEME (index-like) */
+.theme-dark body, .theme-dark html { background:#0e0e0e !important; color:#fff !important; }
+.theme-dark .container, .theme-dark .hostel-card, .theme-dark .blog-card, .theme-dark .admin-card { background: rgba(0,0,0,0.6) !important; color:#fff !important; box-shadow:0 6px 20px rgba(0,0,0,0.5) !important; }
+.theme-dark .navbar, .theme-dark .header-row, .theme-dark .header-middle { background: linear-gradient(-45deg, #452B1F, #ff4d4d, #ffb84d, #452B1F) !important; color:#fff !important; }
+.theme-dark .navbar a, .theme-dark .nav-links a, .theme-dark .header-top, .theme-dark .header-center h1 { color:#fff !important; }
+.theme-dark .footer, .theme-dark footer { background: linear-gradient(45deg,#452B1F,#ff4d4d,#ffb84d,#452B1F) !important; color:#fff !important; }
+.theme-dark a { color:#9fd7ff !important; }
+.theme-dark .hostel-card button, .theme-dark button[type="submit"], .theme-dark .book-btn, .theme-dark .view-location-btn { background:#ff4d4d !important; color:#fff !important; }
+.theme-dark input[type="text"], .theme-dark input[type="password"], .theme-dark input[type="number"], .theme-dark select, .theme-dark .search-input { background:#111 !important; color:#fff !important; border-color:rgba(255,255,255,0.08) !important; }
+
+/* Ensure theme container clipping consistency */
+.theme-light .container, .theme-dark .container { background-clip: padding-box; }

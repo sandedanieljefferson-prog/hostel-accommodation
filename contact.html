@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - HostelHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Roboto', sans-serif; background:#0e0e0e; color:#fff; overflow-x:hidden; }
+
+/* AQUARIUM BACKGROUND */
+#aquarium {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; overflow:hidden;
+  /* warm orange gradient to replace deep blue */
+  background: linear-gradient(to top, #7ac5cf 0%, #04446e 50%, #ffb84d 100%);
+}
+.light-ray {
+  position:absolute; width:200%; height:200%; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 80%);
+  top:-50%; left:-50%; animation: moveLight 12s infinite linear;
+}
+@keyframes moveLight { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
+.fish {
+  position:absolute; border-radius:50%; animation: swim linear infinite;
+}
+.fish::after { content:''; position:absolute; border-radius:50%; }
+
+/* FIREWORKS */
+#fireworks { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; overflow:hidden; }
+.firework, .spark { position:absolute; border-radius:50%; opacity:0.9; }
+
+/* CONTAINER */
+.container { max-width: 700px; margin:120px auto 60px auto; background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border-radius: 20px; padding:40px; box-shadow:0 4px 24px rgba(255,200,80,0.4); }
+
+/* HEADER */
+.header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+.header-side { display:flex; align-items:center; gap:10px; }
+.header-center { flex:1; text-align:center; font-family:'Poppins', sans-serif; font-size:2rem; background: linear-gradient(45deg,#ffd633,#ff4d4d,#ffb84d); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation: gradientText 5s ease infinite; }
+@keyframes gradientText { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
+.header-icon-img { width:38px; height:38px; border-radius:50%; cursor:pointer; transition: transform 0.2s; }
+.header-icon-img:hover { transform:scale(1.1) rotate(-6deg); }
+
+/* DASHBOARD MENU */
+#dashboardMenu { display:none; position:absolute; right:0; top:60px; background:#fff; color:#222; border-radius:16px; padding:25px 30px; min-width:220px; box-shadow:0 6px 24px rgba(0,0,0,0.3); font-size:1.05rem; z-index:1000; }
+#dashboardMenu ul { list-style:none; display:flex; flex-direction:column; gap:12px; padding:0; margin:0; }
+#dashboardMenu a { text-decoration:none; color:#222; transition:color 0.2s; }
+#dashboardMenu a:hover { color:#ffb84d; }
+
+/* CONTACT FORM */
+form { display:flex; flex-direction:column; gap:15px; }
+input, textarea { width:100%; padding:12px; border:1.5px solid #ffd633; border-radius:10px; background: rgba(255,255,255,0.1); color:#fff; font-size:1rem; }
+input::placeholder, textarea::placeholder { color: #ddd; }
+button[type="submit"] { background: #ffd633; color:#0e0e0e; border:none; border-radius:20px; padding:12px 32px; font-size:1.1rem; cursor:pointer; transition: transform 0.2s, background 0.2s; }
+button[type="submit"]:hover { transform:scale(1.05); background:#ffb84d; }
+
+/* SUCCESS MESSAGE */
+#contactSuccess { display:none; color:#44ff66; font-weight:bold; margin-top:10px; }
+
+/* OTHER CONTACT */
+ul.contact-info { list-style:none; padding:0; font-size:1.1rem; }
+ul.contact-info li { margin-bottom:10px; }
+ul.contact-info a { color:#ffd633; text-decoration:none; }
+ul.contact-info a:hover { text-decoration:underline; }
+
+/* FOOTER */
+footer { background: linear-gradient(45deg, #ffb84d, #ff7a2d, #ff4d4d); background-size:400% 400%; animation: gradientBG 15s ease infinite; color:#fff; text-align:center; padding:30px 0; font-size:1.2rem; font-family:'Poppins', sans-serif; font-weight:600; box-shadow:0 -4px 12px rgba(0,0,0,0.6); position: relative; }
+
+/* ANIMATIONS */
+@keyframes gradientBG { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .header-center { font-size:1.6rem; }
+  .container { margin:100px 20px 60px 20px; padding:25px; }
+}
+</style>
+</head>
+<body>
+
+<title>Contact - HostelHub</title>
+<!-- i18n removed -->
+<div id="aquarium">
+  <div class="light-ray"></div>
+</div>
+
+<!-- FIREWORKS -->
+<div id="fireworks"></div>
+
+<!-- HEADER -->
+<div class="container">
+  <div class="header-row">
+    <div class="header-side" style="position:relative;">
+      <span id="dashboardIcon"><img src="dashboard.png" alt="Dashboard" class="header-icon-img"></span>
+      <div id="dashboardMenu">
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="help.html">Help & FAQs</a></li>
+          <li><a href="hostels.html">Available Hostels</a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><button id="userLogoutBtn" style="background:#ff4d4d;color:#fff;border:none;border-radius:8px;padding:6px 16px;cursor:pointer;width:100%;text-align:left;">Logout</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="header-center">HOSTELHUB</div>
+    <div class="header-side">
+      <a href="login.html"><img src="regester.jpeg" alt="Register/Login" class="header-icon-img"></a>
+    </div>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <h1>Contact Us</h1>
+  <form id="contactForm">
+    <input type="text" id="contactName" placeholder="Your Name" required>
+    <input type="email" id="contactEmail" placeholder="Your Email" required>
+    <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <div id="contactSuccess">Message sent! We'll get back to you soon.</div>
+
+  <h2>Other Ways to Reach Us</h2>
+  <ul class="contact-info">
+    <li>📱 WhatsApp: <a href="https://wa.me/+256 707292006" target="_blank">+256 707292006</a></li>
+    <li>✉️ Email: <a href="mailto:sandedanieljefferson@gmail.com">sandedanieljefferson@gmail.com</a></li>
+    <li>❌ X: <a href="https://x.com/yourprofile" target="_blank">@yourprofile</a></li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 HostelHub. Connecting students with comfort ✨
+</footer>
+
+<script>
+// Dashboard toggle
+const dashboardIcon=document.getElementById('dashboardIcon');
+const dashboardMenu=document.getElementById('dashboardMenu');
+dashboardIcon.addEventListener('click',e=>{
+  e.stopPropagation();
+  dashboardMenu.style.display=dashboardMenu.style.display==='block'?'none':'block';
+});
+document.body.addEventListener('click',()=>{dashboardMenu.style.display='none';});
+
+// Logout functionality
+document.getElementById('userLogoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = 'login.html';
+});
+
+// Aquarium fish
+const aquarium=document.getElementById('aquarium');
+const fishColors = ['orange','yellow','lightblue','pink','#44ff66','#ffd633'];
+for(let i=0;i<25;i++){
+  const f=document.createElement('div');
+  f.className='fish';
+  f.style.top=Math.random()*80+'vh';
+  f.style.width=20+Math.random()*40+'px';
+  f.style.height=10+Math.random()*20+'px';
+  f.style.background=fishColors[Math.floor(Math.random()*fishColors.length)];
+  f.style.animationDuration=(6+Math.random()*10)+'s';
+  f.style.opacity=0.8+Math.random()*0.2;
+  aquarium.appendChild(f);
+}
+
+// Fireworks
+const fireworks=document.getElementById("fireworks");
+const colors=["#ff4444","#44aaff","#44ff66","#ffd633","#ff66cc","#ffffff"];
+function createFirework(){
+  const f=document.createElement("div");
+  f.classList.add("firework");
+  f.style.left=Math.random()*100+"%";
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  f.style.background=`radial-gradient(circle, ${color}, transparent)`;
+  fireworks.appendChild(f);
+  setTimeout(()=>{
+    const rect=f.getBoundingClientRect();
+    const x=rect.left+rect.width/2;
+    const y=rect.top;
+    const sparks=Math.floor(Math.random()*15)+15;
+    for(let i=0;i<sparks;i++){
+      const s=document.createElement("div");
+      s.classList.add("spark");
+      const size=Math.random()*10+6;
+      s.style.width=size+"px";
+      s.style.height=size+"px";
+      s.style.left=x+"px";
+      s.style.top=y+"px";
+      s.style.background=color;
+      const angle=Math.random()*2*Math.PI;
+      const radius=Math.floor(Math.random()*100)+100;
+      const dx=Math.cos(angle)*radius+"px";
+      const dy=Math.sin(angle)*radius+"px";
+      s.style.setProperty("--dx",dx);
+      s.style.setProperty("--dy",dy);
+      s.style.position='absolute';
+      s.style.borderRadius='50%';
+      s.style.opacity=0.9;
+      s.style.animation=`explode 1.5s ease-out forwards`;
+      fireworks.appendChild(s);
+      setTimeout(()=>s.remove(),3200);
+    }
+    f.remove();
+  },2500);
+}
+setInterval(()=>{ const count=Math.floor(Math.random()*3)+2; for(let i=0;i<count;i++) createFirework(); },2000);
+
+// Contact form storage
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    if(email && message){
+        const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+        messages.push({ email, message, date: new Date().toISOString() });
+        localStorage.setItem('contactMessages', JSON.stringify(messages));
+        document.getElementById('contactForm').reset();
+        document.getElementById('contactSuccess').style.display='block';
+        setTimeout(()=>{ document.getElementById('contactSuccess').style.display='none'; },4000);
+    }
+});
+</script>
+
+</body>
+</html>
